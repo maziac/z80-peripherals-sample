@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sjasmplus",
+            "type": "shell",
+            "command": "sjasmplus",
+            "args": [
+                "--sym=z80-peripherals-sample.labels",
+                "--sld=z80-peripherals-sample.sld",
+                "--raw=z80-peripherals-sample.obj",
+                "--fullpath",
+                "main.asm"
+            ],
+            "problemMatcher": {
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*)\\((\\d+)\\):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "message": 4
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "dezog",
+            "request": "launch",
+            "name": "ZSimulator",
+            "remoteType": "zsim",
+            "zsim": {
+                "visualMemory": true,
+                "memoryModel": "RAM",
+                "customJsPath": "simulation/ports.js"
+            },
+
+            "sjasmplus": [
+                {
+                    "path": "z80-peripherals-sample.sld",
+                }
+            ],
+
+            "history": {
+                "reverseDebugInstructionCount": 1000000,
+                "spotCount": 10,
+                "codeCoverageEnabled": true
+            },
+            "startAutomatically": false,
+            "skipInterrupt": true,
+            "commandsAfterLaunch": [
+                "-logpoint enable",
+                "-assert enable",
+                "-wpmem enable"
+            ],
+            "rootFolder": "${workspaceFolder}",
+            "topOfStack": "stack_top",
+            "loadObjs": [{ "path": "z80-peripherals-sample.obj", "start": "0x0000" }],
+            "execAddress": "0x0000",
+        }
+
+    ]
+}
