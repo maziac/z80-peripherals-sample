@@ -12,7 +12,11 @@
             "zsim": {
                 "visualMemory": true,
                 "memoryModel": "RAM",
-                "customJsPath": "simulation/ports.js"
+                "customCode": {
+                    "debug": true,
+                    "jsPath": "simulation/ports.js",
+                    "timeStep": 1
+                }
             },
 
             "sjasmplus": [
