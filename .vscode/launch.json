@@ -15,6 +15,7 @@
                 "customCode": {
                     "debug": true,
                     "jsPath": "simulation/ports.js",
+                    "uiPath": "simulation/ui.html",
                     "timeStep": 1
                 }
             },
