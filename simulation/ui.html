@@ -31,18 +31,31 @@
 
 		connectedCallback() {
 			this.innerHTML = "";
-			this.style = `
-				margin:0.0em;
-				padding:0em;
-				text-align:center;
-				display:inline-block;
-				border-width:thin;
-				border-style:solid;
-				border-color:black;
-				width:1em;
-				height:1em;
-				-webkit-user-select:none;
-				`;
+
+			// Set default values.
+			// https://www.w3schools.com/jsref/dom_obj_style.asp
+			if(!this.style.margin)
+				this.style.margin="0.0em";
+			if (!this.style.padding)
+				this.style.padding="0em";
+			if (!this.style.textAlign)
+				this.style.textAlign = "center";
+			if (!this.style.display)
+				this.style.display = "inline-block";
+			if (!this.style.borderWidth)
+				this.style.borderWidth = "thin";
+			if (!this.style.borderStyle)
+				this.style.borderStyle = "solid";
+			if (!this.style.borderColor)
+				this.style.borderColor = "black";
+			if (!this.style.width)
+				this.style.width = "1em";
+			if (!this.style.height)
+				this.style.height = "1em";
+			if (!this.style.webkitUserSelect)
+				this.style.webkitUserSelect = "none";
+			if (!this.style.cursor)
+				this.style.cursor = "pointer";
 
 			// Init undefined
 			if (this.bitvalue == undefined)
@@ -84,10 +97,9 @@
 
 
 		registerMouseListeners() {
-			//if (this.onstatechange != undefined)
+			if (this.onstatechange != undefined)
 			{
-				API.log("style=");
-				this.style = this.style + ` cursor:pointer;`;
+				this.style.cursor=`pointer`;
 				if (this.togglemode == undefined)
 					this.togglemode = true;
 				this.addEventListener('click', () => {
@@ -166,10 +178,9 @@
 		}
 
 		connectedCallback() {
-			this.innerHTML = ``;
-			this.style = `
-      display:inline-block;
-	`;
+			this.innerHTML = "";
+			if(!this.style.display)
+				this.style.display = "inline-block";
 
 			// Init undefined
 			if (this.initialbytevalue == undefined)
@@ -201,6 +212,16 @@
 				// Color
 				bit.oncolor = this.oncolor;
 				bit.offcolor = this.offcolor;
+				// Copy style (e.g. border-radius)
+				bit.style.borderWidth = this.style.borderWidth;
+				bit.style.borderRadius = this.style.borderRadius;
+				bit.style.borderRadius = this.style.borderRadius;
+				if (this.style.borderWidth)
+					bit.style.borderWidth = this.style.borderWidth;
+				if (this.style.borderStyle)
+					bit.style.borderStyle = this.style.borderStyle;
+				if (this.style.borderColor)
+					bit.style.borderColor = this.style.borderColor;
 			}
 
 			// Set the value through setter. Send notification.
@@ -287,7 +308,7 @@
 			const msg = {
 				command: 'generate_interrupt'
 			};
-			//UIAPI.sendToCustomLogic(msg);
+			UIAPI.sendToCustomLogic(msg);
 		}
 	}
 
@@ -307,44 +328,55 @@
 		switch(msg.command) {
 			case 'port_written':
 				// Get the object for output
-				const elem = document.getElementById("id_calc_result_"+parseInt(msg.port,16));
+				const elem = document.getElementById("id_calc_result_"+msg.port.toString(16));
 				// Set value
-				elem.setByteValue(msg.value);
+				elem.bytevalue = msg.value;
 			break;
 		}
 	};
 
 </script>
 
+<table>
 
-<!-- UI to create an interrupt on mouse down event. -->
-<div>
-	Store (INT)
-	<ui-bit togglemode="false" onchange="generate_interrupt(this)"></ui-bit>
-</div>
+	<tr>
+		<!-- UI for input of value1. -->
+		<td style="text-align:right">Value1 =</td>
+		<td>
+			<ui-byte onchange="input_port(0x8000, this.bytevalue)"></ui-byte>
+		</td>
+	</tr>
+	<tr>
+		<!-- UI for input of value2. -->
+		<td style="text-align:right">Value2 =</td>
+		<td>
+			<ui-byte onchange="input_port(0x8001, this.bytevalue)"></ui-byte>
+		</td>
+	</tr>
 
-<!-- UI for input of value1. -->
-<div>
-	Value 1 =
-	<ui-byte togglemode="false" onchange="input_port(0x8000, this.bytevalue)"></ui-byte>
-</div>
+	<tr>
+		<!-- UI to create an interrupt on mouse down event. -->
+		<td style="text-align:right">Value1 + Value2 =</td>
+		<td>
+			<ui-byte id="id_calc_result_9000"></ui-byte>
+		</td>
+	</tr>
 
-<!-- UI for input of value2. -->
-<div>
-	Value 2 =
-	<ui-byte togglemode="false" onchange="input_port(0x8001, this.bytevalue)"></ui-byte>
-</div>
+	<tr>
+		<!-- UI to create an interrupt on mouse down event. -->
+		<td style="text-align:right">Store (INT) :</td>
+		<td>
+			<!-- "border-radius" is used to make it a circle instead of a square -->
+			<ui-bit style="border-radius:1em" togglemode="false" oncolor="yellow" onchange="generate_interrupt(this)"></ui-bit>
+		</td>
+	</tr>
 
-<!-- UI for output of the calculation result: value1 + value2. -->
-<div>
-	Result =
-	<ui-byte id="id_calc_result_9000"></ui-byte>
-</div>
-
-<!-- UI for output of stored result. -->
-<div>
-	Stored =
-	<ui-byte id="id_calc_result_9001"></ui-byte>
-</div>
-
+	<tr>
+		<!-- UI for output of stored result. -->
+		<td style="text-align:right">Stored Value =</td>
+		<td>
+			<ui-byte oncolor="green" id="id_calc_result_9001"></ui-byte>
+		</td>
+	</tr>
+</table>
 
