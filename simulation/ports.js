@@ -4,7 +4,7 @@ class PortOut {
 	constructor(name, port) {
 		this.name=name;
 		this.port=port;
-		this.value=0xFF;
+		this.out(0);	// Initial value
 		API.log("PortOut constructor called");
 	}
 
@@ -12,39 +12,25 @@ class PortOut {
 	out(port, value) {
 		if(port == this.port) {
 			// Store value internally
-			this.value=value;
-			// Send message to UI
-			API.sendMessage({
-				command: 'my_'+this.name,
-				value: value
-			});
+			if (this.value != value) {
+				this.value = value;
+				// Send message to UI
+				API.sendToCustomUi({
+					command: 'port_written',
+					port: port,
+					value: value
+				});
+			}
 		}
 	}
 };
 
 
-// This in port returns t-states (for testing purposes).
-class PortInTime {
-	constructor(name, port) {
-		this.name=name;
-		this.port=port;
-	}
-
-	// Called when an 'out' is executed in Z80.
-	// The returned value depends on time.
-	in(port) {
-		if(port != this.port)
-			return undefined;
-		// Return value
-		// Does not make sense. Is just for testing:
-		return API.tstates;
-	}
-};
-
 // This in port returns the set value.
-class PortIn extends PortInTime {
-	constructor(name, port) {
-		super(name, port);
+class PortIn {
+	constructor(name, port) { // REMOVE: name
+		this.name = name;
+		this.port = port;
 		this.value=0xFF;	// Default
 	}
 
@@ -64,27 +50,19 @@ class PortIn extends PortInTime {
 };
 
 // Instantiate 2 out ports.
-this.outPortA = new PortOut('PortA', 0x8000);
-this.outPortB = new PortOut('PortB', 0x8001);
+this.outPortA = new PortOut('PortA', 0x9000);
+this.outPortB = new PortOut('PortB', 0x9001);
 
 // Instantiate 2 in ports.
-this.inPortA = new PortIn('PortA', 0x9000);
-this.inPortA.setValue(90);
-this.inPortB = new PortInTime('PortB', 0x9001);
+this.inPortA = new PortIn('PortA', 0x8000);
+this.inPortB = new PortIn('PortB', 0x8001);
 
 
-var instrCount = 0;
+
 /**
  * This function is called when time (t-states) advances.
  */
 API.tick = () => {
-	this.inPortA.setValue(2 * API.tstates);
-	// Generate interrupt after 50 t-states
-	instrCount++;
-	if (instrCount % 5 == 0) {
-		//API.generateInterrupt(true, 0);	// NMI
-		API.generateInterrupt(false, 0);	// Maskable interrupt
-	}
 }
 
 /**
@@ -112,14 +90,19 @@ API.readPort = (port) => {
  * This function is called if new input
  * data is available.
  */
-API.receivedMessage = (msg) => {
-	// Check if joy data
+API.receivedFromCustomUi = (msg) => {
 	switch(msg.command) {
-		case 'joy0':
-			this.inPortA.setValue(msg.data);
+		case 'generate_interrupt':
+			// Generate interrupt
+			//API.generateInterrupt(true, 0);	// NMI
+			API.generateInterrupt(false, 0);	// Maskable interrupt
 		break;
-		case 'joy1':
-			this.inPortB.setValue(msg.data);
+		case 'input_port':
+			// Set value for input port
+			if(msg.port == 0x8000)
+				this.inPortA.setValue(msg.value);
+			if(msg.port == 0x8001)
+				this.inPortB.setValue(msg.value);
 		break;
 	}
 }

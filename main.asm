@@ -43,6 +43,7 @@ main:
     ei
 
 .loop:
+    ;halt
     ; Load value 1 from port
     ld bc,0x8000
     in a,(c)
