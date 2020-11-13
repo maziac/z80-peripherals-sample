@@ -141,7 +141,33 @@ note over js: API.generateInterrupt()
 Note: the messages 'port_written', 'input_port' and 'generate_interrupt' are all custom defined messages.
 
 
-# Running the Debugger with the Internal Z80 Simulator
+# Running the Program
 
-# The Peripherals Custom Code
+To run the program the launch.json needs to be configured.
+I.e. you need to give the paths to your custom code:
+~~~json
+"zsim": {
+	"customCode": {
+		"debug": true,
+		"jsPath": "simulation/ports.js",
+		"uiPath": "simulation/ui.html"
+	}
+}
+~~~
+
+If you let the program run you can see the custom code in the ZSimulationView.
+
+![](documentation/images/peripherals_sim.gif)
+
+"Value1" and "Value2" are the inputs for the input-ports.
+"Value1+Value2" and "Stored Value" are the output-ports.
+"Store (INT)" will result in generating an interrupt.
+
+
+# Logging
+
+You can see the logs in the OUTPUT window under "DeZog Custom Code".
+DeZog will log all messages and calls to the custom code by itself but you can also add your own logs.
+
+![](documentation/images/custom_code_log.jpg)
 

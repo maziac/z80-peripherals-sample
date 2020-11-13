@@ -16,9 +16,7 @@
                     "debug": true,
                     "jsPath": "simulation/ports.js",
                     //"jsPath": "simulation/ports_high_traffic.js",
-                    "uiPath": "simulation/ui.html",
-                    "timeStep": 1000000
-
+                    "uiPath": "simulation/ui.html"
                 }
             },
 
