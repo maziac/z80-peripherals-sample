@@ -171,3 +171,14 @@ DeZog will log all messages and calls to the custom code by itself but you can a
 
 ![](documentation/images/custom_code_log.jpg)
 
+
+# Testing your Custom Code without a Z80 program
+
+zsim also offers a few commands that may help in developing the custom code.
+In the debug console enter ```-e help```to see them.
+
+You can e.g. directly write to or read from ports:
+
+![](documentation/images/zsim_commands.gif)
+
+Your custom code (and the UI) is stimulated the same way as if the Z80 CPU would execute a port operation.
