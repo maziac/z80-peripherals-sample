@@ -34,8 +34,8 @@ After the build is ready a z80-peripherals-sample.obj file is created which can 
 
 # The Program Itself
 
-The Z80 assembler program program is used to demonstrate the simulation of interrupts and
-in- and out-port.
+The Z80 assembler program is used to demonstrate the simulation of interrupts and
+in- and out-ports.
 
 The program itself calculates the addition of 2 binary values.
 The result is shown in the ZSimulationView.
@@ -51,7 +51,7 @@ b) the HW simulation code in 'simulation/ports.js'
 c) and the UI in 'simulation/ui.html'
 
 Important to note is that the javascript code to simulate the HW ('simulation/ports.js') works
-synchronously. I.e. all request from the simulator (e.g. reaading a port) have
+synchronously. I.e. all request from the simulator (e.g. reading a port) have
 to be handled immediately so that it does not stop the simulation.
 
 On the other hand the UI ('simulation/ui.html') works asynchronously. It communicates with the HW
@@ -60,7 +60,7 @@ simulation code through messages only. No direct function calls.
 
 # Program Flow
 
-Note: To view the sequence charts in markdown you need a viewer that support puml (plantuml). On the github pages you won't see anything.
+Note: To view the sequence charts in markdown you need a viewer that support puml (plantuml). On the github pages you won't see anything useful.
 
 
 ~~~puml
@@ -76,12 +76,12 @@ loop
 	note over z80: ld bc,0x8000\nin a,(bc)
 	z80 -> js: API.readPort(0x8000)
 	note over js: Return stored value1
-	z80 <- js: value1
+	z80 <-- js: value1
 
 	note over z80: ld e,a\nld bc,0x8001\nin a,(c)
 	z80 -> js: API.readPort(0x8001)
 	note over js: Return stored value2
-	z80 <- js: value2
+	z80 <-- js: value2
 
     note over z80: add a,e\nld (result),a
 
@@ -172,7 +172,7 @@ DeZog will log all messages and calls to the custom code by itself but you can a
 ![](documentation/images/custom_code_log.jpg)
 
 
-# Testing your Custom Code without a Z80 program
+# Testing your Custom Code from the Debug Console
 
 zsim also offers a few commands that may help in developing the custom code.
 In the debug console enter ```-e help```to see them.
