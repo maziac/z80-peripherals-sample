@@ -35,7 +35,7 @@
             "skipInterrupt": true,
             "commandsAfterLaunch": [
                 "-logpoint enable",
-                "-assert enable",
+                "-assertion enable",
                 "-wpmem enable"
             ],
             "rootFolder": "${workspaceFolder}",

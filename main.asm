@@ -29,9 +29,9 @@
 ;===========================================================================
 
 
+    SLDOPT COMMENT WPMEM, LOGPOINT, ASSERTION
 
-
- DEVICE ZXSPECTRUMNEXT
+    DEVICE NOSLOT64K
 
     ORG $0000
 
