@@ -44,6 +44,14 @@ main:
 
 .loop:
     ;halt
+    call add_port_inputs
+    ; Loop
+    jr .loop
+
+
+; Reads from port 8000h and 8001h, adds both values and stores them
+; to 'result' and port 9000h.
+add_port_inputs:
     ; Load value 1 from port
     ld bc,0x8000
     in a,(c)
@@ -63,16 +71,14 @@ main:
     ; Output result to port
     ld bc,0x9000
     out (c),a
-
-    ; Loop
-    jr .loop
+    ret
 
 
     defs $0038-$
 
 
 ; Interrupt routine at 0x0038.
-; The interrupt memorizies the result to another port.;
+; The interrupt memorizies the result to another port.
 im1_int:
     push af
     push bc
@@ -111,3 +117,11 @@ stack_top:
 
 ; The calculation result is stored here.
 result: defb 0
+
+
+;===========================================================
+; Unit tests
+;===========================================================
+
+    include "unit_tests/unit_tests.asm"
+
