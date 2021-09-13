@@ -25,7 +25,28 @@
 UT_port_add_1:
     call add_port_inputs
     ; Test result
-    TEST_MEMORY_BYTE result, 11
+    TEST_MEMORY_BYTE result, 0
+ TC_END
+
+
+UT_port_add_2:
+    call add_port_inputs
+    ; Test result
+    TEST_MEMORY_BYTE result, 3
+ TC_END
+
+
+UT_port_add_3:
+    call add_port_inputs
+    ; Test result
+    TEST_MEMORY_BYTE result, 5
+ TC_END
+
+
+UT_port_add_4:
+    call add_port_inputs
+    ; Test result
+    TEST_MEMORY_BYTE result, 4
  TC_END
 
 
