@@ -30,7 +30,6 @@
                 "codeCoverageEnabled": true
             },
             "startAutomatically": false,
-            "skipInterrupt": true,
             "commandsAfterLaunch": [
                 "-logpoint enable",
                 "-assertion enable",
@@ -73,7 +72,6 @@
                 "codeCoverageEnabled": true
             },
             "startAutomatically": false,
-            "skipInterrupt": true,
             "rootFolder": "${workspaceFolder}",
             "loadObjs": [
                 {
