@@ -42,6 +42,8 @@ main:
     im 1
     ei
 
+    ;jp iommu_test       ; Uncomment for demo of bank switching in ioMmu
+
 .loop:
     ;halt
     call add_port_inputs
@@ -95,6 +97,33 @@ im1_int:
 
 
     defs 0x0100 - $
+
+iommu_test:
+    ; write a different value to banks 1-4.
+    ld bc,0x0100
+    ld a,1
+    ld hl,0xC000
+.fill_loop:
+    out (c),a   ; Switch bank
+    ld (hl),a   ; Put bank number in first address in bank
+    inc a
+    cp 5
+    jr nz,.fill_loop
+
+    ; Switch banks
+.start_switch_loop:
+    ld a,1
+.switch_loop:
+    out (c),a  ; Switch bank
+    inc a
+    cp 5
+    jr nz,.switch_loop
+    jr .start_switch_loop
+
+
+
+
+    defs 0x0300 - $
 
 ;===========================================================
 ; Stack.
