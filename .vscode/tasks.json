@@ -13,6 +13,7 @@
                 "main.asm"
             ],
             "problemMatcher": {
+                "owner": "sjasmplus",
                 "fileLocation": [
                     "relative",
                     "${workspaceRoot}"
