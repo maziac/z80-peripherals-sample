@@ -8,7 +8,7 @@ This is a small Z80 assembler program that uses custom javascript code to emulat
 # Prerequisites
 
 - Visual Studio Code (vscode)
-- [DeZog](https://github.com/maziac/DeZog) (>= v2.0.0)
+- [DeZog](https://github.com/maziac/DeZog) (>= v2.7.0)
 - Z80 Assembler: sjasmplus, https://github.com/z00m128/sjasmplus
 
 The program runs inside the internal Z80 simulator.
