@@ -26,10 +26,9 @@ However, if you would like to do some changes you need to compile.
 From the menu choose "Terminal->Run Build Task..."
 tasks.json is configured such that it will call sjasmplus with the required parameters.
 
-There are several .asm files which are all included in the main.asm file. This file is the one being assembled.
+This main.asm file is the one being assembled. It contains another file, the unit_test.asm, to provide also Z80 unit tests.
 
-After the build is ready a z80-peripherals-sample.obj file is created which can be used with ZEsarUX.
-
+After the build is ready a z80-peripherals-sample.obj file is created which can be used with 'zsim'.
 
 
 # The Program Itself
