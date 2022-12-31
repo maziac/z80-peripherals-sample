@@ -26,7 +26,7 @@ class PortOut {
 };
 
 
-// This in port returns the set value.
+// This in-port returns the set value.
 class PortIn {
 	constructor(name, port) { // REMOVE: name
 		this.name = name;
@@ -50,13 +50,12 @@ class PortIn {
 };
 
 // Instantiate 2 out ports.
-this.outPortA = new PortOut('PortA', 0x9000);
-this.outPortB = new PortOut('PortB', 0x9001);
+const outPortA = new PortOut('PortA', 0x9000);
+const outPortB = new PortOut('PortB', 0x9001);
 
 // Instantiate 2 in ports.
-this.inPortA = new PortIn('PortA', 0x8000);
-this.inPortB = new PortIn('PortB', 0x8001);
-
+const inPortA = new PortIn('PortA', 0x8000);
+const inPortB = new PortIn('PortB', 0x8001);
 
 
 /**
@@ -70,8 +69,8 @@ API.tick = () => {
  */
 API.writePort = (port, value) => {
 	// Go through all ports
-	this.outPortA.out(port, value);
-	this.outPortB.out(port, value);
+	outPortA.out(port, value);
+	outPortB.out(port, value);
 }
 
 /**
@@ -79,10 +78,10 @@ API.writePort = (port, value) => {
  */
 API.readPort = (port) => {
 	// Check all ports and return a valid value
-	let value = this.inPortA.in(port);
+	let value = inPortA.in(port);
 	if(value != undefined)
 		return value;
-	value = this.inPortB.in(port);
+	value = inPortB.in(port);
 	return value;
 }
 
@@ -100,9 +99,9 @@ API.receivedFromCustomUi = (msg) => {
 		case 'input_port':
 			// Set value for input port
 			if(msg.port == 0x8000)
-				this.inPortA.setValue(msg.value);
+				inPortA.setValue(msg.value);
 			if(msg.port == 0x8001)
-				this.inPortB.setValue(msg.value);
+				inPortB.setValue(msg.value);
 		break;
 	}
 }
